@@ -1,6 +1,6 @@
 class ItemsController < ApplicationController
   def query
-    item = Item.find_by(name: params.dig(:entities, 0, :type))
+    item = Item.find_by(name: params[:name])
 
     if item
       @item = item

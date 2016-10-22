@@ -3,28 +3,7 @@ require 'rails_helper'
 RSpec.describe ItemsController, type: :controller do
   let(:params) do
     {
-      "query": "can i get a large coffee please",
-     "intents":
-       [
-         {
-           "intent": "Order",
-           "score": 0.9999995
-         },
-         {
-           "intent": "None",
-           "score": 0.0395014025
-         }
-       ],
-     "entities":
-       [
-         {
-          "entity": "large coffee",
-          "type": item.name,
-          "startIndex": 12,
-          "endIndex": 23,
-          "score": 0.8477534
-         }
-       ]
+      "name": item.name
     }
   end
 
