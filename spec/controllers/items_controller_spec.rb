@@ -2,9 +2,7 @@ require 'rails_helper'
 
 RSpec.describe ItemsController, type: :controller do
   let(:params) do
-    {
-      "name": item.name
-    }
+    { "name": item.name }
   end
 
   describe "GET #query" do
