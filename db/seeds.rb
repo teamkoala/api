@@ -6,4 +6,4 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Item.create!(name: 'Coffee::large')
+Item.find_or_create_by!(name: 'Coffee::large')
