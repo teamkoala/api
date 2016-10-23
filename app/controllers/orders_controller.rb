@@ -3,6 +3,11 @@ class OrdersController < ApplicationController
     @orders = Order.all
   end
 
+  def new
+    @order = Order.new(state: 'talking')
+    render :show
+  end
+
   def finish
     @order = Order.find_by(id: params[:id])
 

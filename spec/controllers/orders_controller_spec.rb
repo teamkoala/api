@@ -18,6 +18,17 @@ RSpec.describe OrdersController, type: :controller do
     end
   end
 
+  describe "POST #show" do
+    context 'with a valid order id' do
+      it "returns http success" do
+        post :new, format: :json
+
+        expect(response).to have_http_status(:success)
+        expect(response.body).to match 'false'
+      end
+    end
+  end
+
   describe "GET #show" do
     context 'with a valid order id' do
       let(:order) { FactoryGirl.create(:order) }
@@ -26,7 +37,7 @@ RSpec.describe OrdersController, type: :controller do
       end
 
       it "returns http success" do
-        patch :show, format: :json, id: order.id
+        get :show, format: :json, id: order.id
 
         expect(response).to have_http_status(:success)
         expect(response.body).to match 'false'
