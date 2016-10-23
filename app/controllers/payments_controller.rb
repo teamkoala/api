@@ -5,6 +5,7 @@ class PaymentsController < ApplicationController
     response.headers['Content-Type'] = 'text/event-stream'
     sse = Eventer::SSE.new(response.stream)
 
+    sse.write({rar: 'yes'})
     begin
       LineItem.on_line_item_create do
         sse.write({ line_item: LineItem.last})
