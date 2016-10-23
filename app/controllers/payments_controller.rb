@@ -3,7 +3,7 @@ class PaymentsController < ApplicationController
 
   def index
     response.headers['Content-Type'] = 'text/event-stream'
-    sse = SSE.new(response.stream, retry: 300, event: "line_item")
+    sse = Eventer::SSE.new(response.stream)
 
     begin
       LineItem.on_line_item_create do
