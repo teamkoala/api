@@ -6,9 +6,17 @@
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
 
-Item.find_or_create_by!(name: 'Coffee::large', price: 200, count: 3)
-Item.find_or_create_by!(name: 'Coffee::medium', price: 100, count: 2)
-Item.find_or_create_by!(name: 'Coffee::small', price: 50, count: 5)
+item = Item.find_or_create_by!(name: 'Coffee::large', price: 200, count: 3)
+item.pretty_name = 'Large Coffee'
+item.save
+
+item = Item.find_or_create_by!(name: 'Coffee::medium', price: 100, count: 2)
+item.pretty_name = 'Medium Coffee'
+item.save
+
+item = Item.find_or_create_by!(name: 'Coffee::small', price: 50, count: 5)
+item.pretty_name = 'Small Coffee'
+item.save
 
 Order.all.each do |order|
   LineItem.create(item: Item.first, order: order)
