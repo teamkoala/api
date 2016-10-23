@@ -8,7 +8,7 @@ class PaymentsController < ApplicationController
     sse.write({rar: 'yes'})
     begin
       LineItem.on_line_item_create do
-        sse.write({ line_item: LineItem.last})
+        sse.write({ line_item: LineItem.last.order.name})
         sleep 1
       end
     end
