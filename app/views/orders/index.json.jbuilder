@@ -1,7 +1,7 @@
 json.orders do
   json.array! @orders do |order|
     json.id order.id
-    json.order order.state
+    json.state order.state
     json.finished order.finished
     json.line_items do
       json.array! order.line_items do |line_item|
