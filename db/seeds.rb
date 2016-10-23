@@ -9,3 +9,7 @@
 Item.find_or_create_by!(name: 'Coffee::large', price: 200, count: 3)
 Item.find_or_create_by!(name: 'Coffee::medium', price: 100, count: 2)
 Item.find_or_create_by!(name: 'Coffee::small', price: 50, count: 5)
+
+Order.all.each do |order|
+  LineItem.create(item: Item.first, order: order)
+end
