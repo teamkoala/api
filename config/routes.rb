@@ -11,6 +11,7 @@ Rails.application.routes.draw do
 
   get 'items/query'
 
+  get 'health', to: 'users#index'
   get 'users', to: 'users#index'
   root to: 'users#index'
 end
