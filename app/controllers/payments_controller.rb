@@ -7,7 +7,10 @@ class PaymentsController < ApplicationController
 
     begin
       LineItem.on_line_item_create do
-        sse.write({ line_item: LineItem.last.item.name})
+        sse.write({
+                    type: 'new line item',
+                    line_item: LineItem.last&.item&.name
+                  })
       end
     end
   ensure
