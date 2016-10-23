@@ -9,6 +9,7 @@ class PaymentsController < ApplicationController
       LineItem.on_line_item_create do
         sse.write({
                     type: 'new line item',
+                    line_item_id: LineItem.id,
                     line_item: LineItem.last&.item&.name
                   })
         sleep 1
