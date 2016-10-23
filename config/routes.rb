@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'payments/index'
+
   patch 'orders/:id/finish', to: 'orders#finish'
 
   post 'line_items/create'
