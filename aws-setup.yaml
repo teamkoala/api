@@ -1,0 +1,87 @@
+---
+AWSTemplateFormatVersion: '2010-09-09'
+Description: >
+  This template a ruby elasticbeanstalk environment that connects to a
+  postgresql database by allowing for traffic within the databases\'s vpc
+
+  BEWARE OF MAKING CHANGES TO THIS TEMPLATE AND UPDATING THE STACK ON
+  CLOUDFORMATION AS IT MAY RESULT IN AWS REPLACING ONE RDS INSTANCE WITH
+  ANOTHER, RESULTING IN LOSS OF THE DATA.
+
+Parameters:
+  ApplicationName:
+    Description: Name of Elasticbeanstalk application
+    Type: String
+
+  PrivateSubnetId:
+    Description: Private subnet that the beanstalk app runs in (in AZ 0)
+    Type: String
+
+  PublicSubnetId:
+    Description: Public subnet that the elb subnet runs in (in AZ 0)
+    Type: String
+
+  PrivateRouteTable:
+    Description: Id of Private Route Table
+    Type: String
+
+  VpcId:
+    Description: Id of VPC to host database within
+    Type: String
+
+Resources:
+  ElasticIp:
+    Type: AWS::EC2::EIP
+    Properties:
+      Domain: vpc
+
+  NATGateway:
+    Type: AWS::EC2::NatGateway
+    Properties:
+      AllocationId: !GetAtt ElasticIp.AllocationId
+      SubnetId: !Ref PublicSubnetId
+
+  PrivateRoute:
+    Type: AWS::EC2::Route
+    Properties:
+      RouteTableId: !Ref PrivateRouteTable
+      DestinationCidrBlock: 0.0.0.0/0
+      NatGatewayId: !Ref NATGateway
+
+  EBApplication:
+    DependsOn:
+      - PrivateRoute
+    Type: AWS::ElasticBeanstalk::Application
+    Properties:
+      ApplicationName: !Ref ApplicationName
+      Description: rails-api
+
+  EBEnvironment:
+    DependsOn:
+      - EBApplication
+    Type: AWS::ElasticBeanstalk::Environment
+    Properties:
+      ApplicationName: !Ref ApplicationName
+      SolutionStackName: 64bit Amazon Linux 2016.03 v2.1.6 running Ruby 2.3 (Puma)
+      EnvironmentName: prod
+      OptionSettings:
+        - Namespace: aws:ec2:vpc
+          OptionName: VPCId
+          Value: !Ref VpcId
+        - Namespace: aws:ec2:vpc
+          OptionName: ELBSubnets
+          Value: !Ref PublicSubnetId
+        - Namespace: aws:ec2:vpc
+          OptionName: Subnets
+          Value: !Ref PrivateSubnetId
+        - Namespace: aws:elasticbeanstalk:application
+          OptionName: Application Healthcheck Url
+          Value: /health
+      Tier:
+        Name: WebServer
+        Type: Standard
+
+Outputs:
+  EBUrl:
+    Description: URL of Elasticbeanstalk
+    Value: !GetAtt EBEnvironment.EndpointURL
