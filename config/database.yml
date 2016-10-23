@@ -80,6 +80,8 @@ test:
 #
 production:
   <<: *default
-  database: api_production
-  username: api
+  database: sw_production
+  username: sw_admin
   password: <%= ENV['API_DATABASE_PASSWORD'] %>
+  host: sw-production.c0upukqqqnyl.us-west-2.rds.amazonaws.com
+  port: 5432
