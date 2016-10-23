@@ -80,7 +80,4 @@ test:
 #
 production:
   <<: *default
-  database: sw_production
-  username: sw_admin
-  password: <%= ENV['API_DATABASE_PASSWORD'] %>
-  url: sw-production.c0upukqqqnyl.us-west-2.rds.amazonaws.com:5432
+  url: <%= ENV['DATABASE_URL'] %>
