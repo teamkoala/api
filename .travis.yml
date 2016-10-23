@@ -13,7 +13,7 @@ deploy:
   provider: elasticbeanstalk
   region: us-west-2
   app: api
-  env: prod-EBEn-1D6D1R597XFB7
+  env: prod
   bucket-name: elasticbeanstalk-us-west-2-863445156434
   access_key_id: AKIAI7EEJMNBZADFGMYA
   secret_access_key: $SECRET_ACCESS_KEY
