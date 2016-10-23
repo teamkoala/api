@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get 'state', to: 'state#index'
 
   resources :orders, only: %i(index show)
 
