@@ -4,9 +4,11 @@ class PaymentsController < ApplicationController
   def index
     response.headers['Content-Type'] = 'text/event-stream'
     sse = SSE.new(response.stream, retry: 300, event: "event-name")
-    loop do
-      sse.write({ name: 'John'})
-      sleep 20
+
+    begin
+      LineItem.on_line_item_create do
+        sse.write({ line_item: LineItem.last})
+      end
     end
   ensure
     sse.close
