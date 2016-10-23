@@ -9,6 +9,7 @@ class PaymentsController < ApplicationController
     begin
       LineItem.on_line_item_create do
         sse.write({ line_item: LineItem.last})
+        sleep 1
       end
     end
   ensure
