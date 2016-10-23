@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   get 'state', to: 'state#index'
 
   resources :orders, only: %i(index show new)
+  delete 'orders/destroy', to: 'orders#destroy_all'
 
   get 'payments/index'
 

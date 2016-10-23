@@ -52,10 +52,26 @@ RSpec.describe OrdersController, type: :controller do
       end
 
       it "returns http success" do
-        patch :index, format: :json
+        get :index, format: :json
 
         expect(response).to have_http_status(:success)
         expect(JSON.parse(response.body).fetch('orders').length).to eq 3
+      end
+    end
+  end
+
+  describe "DELETE #destroy" do
+    context 'with a valid orders' do
+      before do
+        FactoryGirl.create_list(:order, 3)
+      end
+
+      it "returns http success and deletes all orders" do
+        expect(Order.count).to eq 3
+        delete :destroy_all, format: :json
+
+        expect(response).to have_http_status(:success)
+        expect(Order.count).to eq 0
       end
     end
   end

@@ -22,4 +22,9 @@ class OrdersController < ApplicationController
   def show
     @order = Order.find_by(id: params[:id])
   end
+
+  def destroy_all
+    Order.delete_all
+    head :no_content
+  end
 end
