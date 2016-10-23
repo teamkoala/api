@@ -11,6 +11,7 @@ class PaymentsController < ApplicationController
                     type: 'new line item',
                     line_item: LineItem.last&.item&.name
                   })
+        sleep 1
       end
     end
   ensure
