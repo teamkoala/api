@@ -24,7 +24,7 @@ class OrdersController < ApplicationController
   end
 
   def destroy_all
-    LineItems.delete_all
+    LineItem.delete_all
     Order.delete_all
     head :no_content
   end
